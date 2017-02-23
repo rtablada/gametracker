@@ -69,4 +69,25 @@ module('reducer', () => {
     assert.deepEqual(reducer(initialState, actionOne), { ...initialState, games: [gameTwo] });
     assert.deepEqual(reducer(withGame, actionOne), { ...initialState, games: [gameTwo, gameOne] });
   });
+
+  test('it can update a game based on the _id property', (assert) => {
+    const stateOne = { ...defaultState, games: [gameOne] };
+    const stateTwo = { ...defaultState, games: [{ ...gameOne, atCampus: false }] };
+    const stateThree = { ...defaultState, games: [gameOne, gameTwo] };
+    const actionOne = { type: 'GAME@UPDATE:TOGGLE_ATCAMPUS', id: gameOne._id };
+
+    /* eslint max-len: 0 */
+    assert.deepEqual(reducer(stateOne, actionOne), { ...defaultState,
+      games: [{
+        ...gameOne,
+        atCampus: false,
+      }] });
+    assert.deepEqual(reducer(stateTwo, actionOne), { ...defaultState,
+      games: [{
+        ...gameOne,
+        atCampus: true,
+      }] });
+    assert.deepEqual(reducer(stateThree, actionOne), { ...defaultState,
+      games: [{ ...gameOne, atCampus: false }, gameTwo] });
+  });
 });
