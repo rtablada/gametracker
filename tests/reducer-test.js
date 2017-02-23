@@ -90,4 +90,13 @@ module('reducer', () => {
     assert.deepEqual(reducer(stateThree, actionOne), { ...defaultState,
       games: [{ ...gameOne, atCampus: false }, gameTwo] });
   });
+
+  test(' it can remove based on the _id property', (assert) => {
+    const stateOne = { ...defaultState, games: [gameOne] };
+    const stateTwo = { ...defaultState, games: [gameOne, gameTwo] };
+    const actionOne = { type: 'GAME@REMOVE:COMPLETE', id: gameOne._id };
+
+    assert.deepEqual(reducer(stateOne, actionOne), { ...defaultState, games: [] });
+    assert.deepEqual(reducer(stateTwo, actionOne), { ...defaultState, games: [gameTwo] });
+  });
 });

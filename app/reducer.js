@@ -33,6 +33,11 @@ export default function reducer(state, action) {
           return game;
         }),
       };
+    case 'GAME@REMOVE:COMPLETE':
+      return {
+        ...state,
+        games: state.games.filter(game => game._id !== action.id),
+      };
     default:
       return state || {
         loading: false,
