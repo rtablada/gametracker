@@ -1,5 +1,6 @@
 import store from '../store';
 import FormView from './form';
+import ListView from './list';
 
 
 export default class AppView {
@@ -7,6 +8,7 @@ export default class AppView {
     this.el = el;
     this.store = store;
     this.formView = new FormView(el.querySelector('.create-form'), this.store);
+    this.listView = new ListView(el.querySelector('.game-list'), this.store);
   }
 
   created() {
@@ -18,6 +20,7 @@ export default class AppView {
     // Mount Form view
     this.formView.mounted();
     // Mount list view
+    this.listView.mounted();
 
     // Figure out old data
     this.store.dispatch({
