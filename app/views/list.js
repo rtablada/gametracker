@@ -13,6 +13,16 @@ class ItemView {
     <button class="game__remove">X</button>`;
   }
 
+  mounted() {
+    this.el.querySelector('.game__remove').addEventListener('click', () => {
+      this.store.dispatch({ type: 'GAME@REMOVE:COMPLETE', id: this.game._id });
+    });
+
+    this.el.querySelector('.game__on-campus').addEventListener('click', () => {
+      this.store.dispatch({ type: 'GAME@UPDATE:TOGGLE_ATCAMPUS', id: this.game._id });
+    });
+  }
+
   render() {
     const minPlayers = this.game.minPlayers;
     const maxPlayers = this.game.maxPlayers;
@@ -47,6 +57,7 @@ export default class GameList {
       games.forEach((game) => {
         // Create a item view
         const view = new ItemView(game, this.store);
+        view.mounted();
         view.render();
 
         // Append Item view element to list
